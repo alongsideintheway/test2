@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chzu.mapper.ReapMapper">
+    <select id="findBywid" parameterType="int" resultType="Reap">
+        SELECT * FROM reap WHERE wid=#{wid}
+    </select>
+    <delete id="reapDelete" parameterType="int">
+        DELETE FROM reap WHERE id=#{id}
+    </delete>
+    <insert id="reapAdd" parameterType="Reap">
+        INSERT INTO reap(type,award,time,detail,wid) VALUES (#{type},#{award},#{time},#{detail},#{wid})
+    </insert>
+    <select id="findAll" resultType="Reap">
+        SELECT
+          b.name as  tname,
+          r.award as award,
+          r.type as type,
+          r.time as time,
+          r.checks as  checks,
+          r.wid as wid,
+          r.detail as detail
+         FROM reap r
+         left join teacher b on b.wid  =  r.wid
+    </select>
+    <update id="checkreap" parameterType="int">
+        UPDATE reap set checks="已审核" WHERE id=#{id}
+    </update>
+    <select id="findReapLikeUname" parameterType="String" resultType="Reap">
+         SELECT
+          b.name AS  tname,
+          r.award AS award,
+          r.type AS TYPE,
+          r.time AS TIME,
+          r.checks AS  checks,
+          r.wid AS wid,
+          r.detail AS detail
+         FROM reap r
+         LEFT JOIN teacher b ON b.wid  =  r.wid
+         WHERE b.`name` LIKE "%"#{tname}"%"
+    </select>
+</mapper>

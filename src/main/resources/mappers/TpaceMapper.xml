@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chzu.mapper.TpaceMapper">
+    <insert id="tpaceAdd" parameterType="Tpace">
+          INSERT INTO tpace(wid,course,spe,textb,tclass,planxs,testke,jiangke,lianx,zhou) VALUES (#{wid},#{course},#{spe},#{textb},#{tclass},#{planxs},#{testke},#{jiangke},#{lianx},#{zhou})
+    </insert>
+    <select id="ctpaceBywid" parameterType="int" resultType="Tpace">
+        SELECT * FROM tpace WHERE wid=#{wid}
+    </select>
+    <select id="ctpaceBycid" parameterType="int" resultType="Tpace">
+        SELECT * FROM tpace WHERE cid=#{cid}
+    </select>
+    <delete id="tpaceDelete" parameterType="int">
+        DELETE FROM tpace WHERE cid=#{cid}
+    </delete>
+    <select id="ztpaceBywid" parameterType="int" resultType="Tpace">
+        SELECT * FROM tpace WHERE wid=#{wid} AND time=1
+    </select>
+    <insert id="ztpaceAdd" parameterType="Tpace">
+          INSERT INTO tpace(wid,course,spe,textb,tclass,planxs,testke,jiangke,lianx,zhou,time) VALUES (#{wid},#{course},#{spe},#{textb},#{tclass},#{planxs},#{testke},#{jiangke},#{lianx},#{zhou},#{time})
+    </insert>
+    <select id="ltpaceBywid" parameterType="int" resultType="Tpace">
+        SELECT * FROM tpace WHERE wid=#{wid} AND time=2
+    </select>
+    <select id="ctpacefindAll" resultType="Tpace">
+        SELECT
+          b.name AS  tname,
+          t.*
+         FROM tpace t
+         LEFT JOIN teacher b ON b.wid  =  t.wid
+         WHERE t.time=0
+    </select>
+    <update id="checktpace" parameterType="Tpace">
+         UPDATE tpace set che=1 WHERE cid=#{cid}
+    </update>
+    <select id="findtpaceLikeUname" parameterType="String" resultType="Tpace">
+         SELECT
+          b.name AS  tname,
+          t.*
+         FROM tpace t
+         LEFT JOIN teacher b ON b.wid  =  t.wid
+         WHERE t.time=0 AND b.`name` LIKE "%"#{tname}"%"
+    </select>
+    <select id="ztpacefindAll" resultType="Tpace">
+        SELECT
+          b.name AS  tname,
+          t.*
+         FROM tpace t
+         LEFT JOIN teacher b ON b.wid  =  t.wid
+
+    </select>
+    <select id="findztpaceLikeUname" parameterType="String" resultType="Tpace">
+         SELECT
+          b.name AS  tname,
+          t.*
+         FROM tpace t
+         LEFT JOIN teacher b ON b.wid  =  t.wid
+         WHERE t.time=1 AND b.`name` LIKE "%"#{tname}"%"
+    </select>
+    <select id="mtpacefindAll" resultType="Tpace">
+        SELECT
+          b.name AS  tname,
+          t.*
+         FROM tpace t
+         LEFT JOIN teacher b ON b.wid  =  t.wid
+         WHERE t.time=2
+    </select>
+    <select id="findmtpaceLikeUname" parameterType="String" resultType="Tpace">
+         SELECT
+          b.name AS  tname,
+          t.*
+         FROM tpace t
+         LEFT JOIN teacher b ON b.wid  =  t.wid
+         WHERE t.time=2 AND b.`name` LIKE "%"#{tname}"%"
+    </select>
+    <update id="remakeAdd" parameterType="Tpace">
+         UPDATE tpace set grade=#{grade},remake=#{remake} WHERE cid=#{cid}
+    </update>
+    <select id="motpacefindAll" resultType="Tpace">
+         SELECT
+          b.name AS  tname,
+          t.*
+         FROM tpace t
+         LEFT JOIN teacher b ON b.wid  =  t.wid
+    </select>
+    <update id="tpaceupdate" parameterType="Tpace" >
+           UPDATE tpace set khfs=#{khfs},khfslx=#{khfslx},sypt=#{sypt},sj=#{sj},kccl=#{kccl},jxdg=#{jxdg},jxjd=#{jxjd},dxal=#{dxal},xjb=#{xjb},jfc=#{jfc},kcsm=#{kcsm} WHERE cid=#{cid}
+    </update>
+</mapper>

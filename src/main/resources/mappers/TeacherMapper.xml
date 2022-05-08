@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chzu.mapper.TeacherMapper">
+ <select id="findBywidTeacherDetail" parameterType="int" resultType="Teacher">
+     SELECT * FROM teacher WHERE wid=#{wid}
+ </select>
+    <delete id="deleteTeacher" parameterType="int">
+       DELETE FROM teacher  WHERE wid=#{wid}
+    </delete>
+    <insert id="addTeacher" parameterType="teacher" >
+         INSERT INTO teacher(name,wid,sex,age,email,title,detail,iphone) VALUES (#{name},#{wid},#{sex},#{age},#{email},#{title},#{detail},#{iphone})
+    </insert>
+    <insert id="updata" parameterType="Updata">
+        INSERT INTO updata(wid,uplocation) VALUES (#{wid},#{uplocation})
+    </insert>
+    <select id="findAllTeacher" resultType="Teacher">
+        SELECT * FROM teacher
+    </select>
+    <select id="findTeacherLikeUname" parameterType="Teacher" resultType="Teacher">
+         SELECT * FROM teacher  WHERE name LIKE "%"#{name}"%"
+    </select>
+</mapper>

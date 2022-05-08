@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chzu.mapper.WorkvMapper">
+    <select id="workvfindBywid" parameterType="int" resultType="Workv">
+        SELECT * FROM workv WHERE wid=#{wid}
+    </select>
+   <select id="findAllworkv" resultType="Workv">
+           SELECT
+         b.name as  tname,
+         b.title as title,
+         w.*
+         FROM workv w
+         left join teacher b on b.wid  =  w.wid
+   </select>
+    <select id="findworkvLikeUname" parameterType="String" resultType="Workv">
+   SELECT
+         b.name as  tname,
+         b.title as title,
+         w.*
+         FROM workv w
+         left join teacher b on b.wid  =  w.wid
+          WHERE b.`name` LIKE "%"#{tname}"%"
+    </select>
+    <insert id="workvadd" parameterType="Workv">
+          INSERT INTO workv(wid,col,alltime,course,note) VALUES (#{wid},#{col},#{alltime},#{course},#{note})
+    </insert>
+    <delete id="workvDelete" parameterType="int">
+        DELETE FROM workv WHERE id=#{id}
+    </delete>
+</mapper>

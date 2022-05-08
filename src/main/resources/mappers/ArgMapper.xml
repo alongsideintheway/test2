@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chzu.mapper.ArgMapper">
+    <insert id="argAdd" parameterType="Arg">
+           INSERT INTO argre(wid,course,twh,tclass,tage)
+           VALUES (#{wid},#{course},#{twh},#{tclass},#{tage})
+    </insert>
+    <select id="findAllarg" resultType="Arg">
+         SELECT
+          b.name AS  tname,
+        a.*
+         FROM argre a
+         LEFT JOIN teacher b ON b.wid  = a.wid
+
+    </select>
+    <delete id="deleteargbyid" parameterType="int">
+        DELETE FROM argre WHERE id=#{id}
+    </delete>
+    <select id="findargLikeUname" parameterType="String" resultType="Arg">
+        SELECT
+          b.name AS  tname,
+        a.*
+         FROM argre a
+         LEFT JOIN teacher b ON b.wid  = a.wid
+            WHERE b.`name` LIKE "%"#{uname}"%"
+    </select>
+    <select id="findargbywid" parameterType="int" resultType="Arg">
+         SELECT * FROM
+ (
+ SELECT
+          b.planxs AS  ttime,
+          b.classtype AS ctype,
+        a.*
+         FROM argre a
+         LEFT JOIN course b ON b.course  = a.course
+)AS c
+WHERE
+(
+c.wid=#{wid}
+)
+    </select>
+    <update id="argUpdate" parameterType="arg" >
+            UPDATE argre set czhou=#{czhou},cxues=#{cxues},csex=#{csex},loc=#{loc},jie=#{jie},xinq=#{xinq},classf=#{classf} WHERE id=#{id}
+    </update>
+    <select id="findBywidargDetail" parameterType="int" resultType="Arg">
+        SELECT * FROM
+ (
+ SELECT
+          b.name AS  tname,
+        a.*
+         FROM argre a
+         LEFT JOIN teacher b ON b.wid  = a.wid
+)AS c
+WHERE
+(
+c.wid=#{wid}
+)
+    </select>
+</mapper>

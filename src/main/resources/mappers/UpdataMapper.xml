@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chzu.mapper.UpdataMapper">
+    <insert id="updata" parameterType="Updata">
+         INSERT INTO updata(wid,updatalocation,course,profile) VALUES (#{wid},#{updatalocation},#{course},#{profile})
+    </insert>
+    <!--<resultMap id="Updatalocation" type="com.chzu.pojo.Updata">
+        <result column="updatalocation" property="updatalocation"  jdbcType="varchar"></result>
+    </resultMap>-->
+    <select id="findfilelocationbywid" parameterType="int" resultType="Updata">
+        SELECT * FROM updata WHERE wid = #{wid}
+    </select>
+    <delete id="deletefilebyid" parameterType="int">
+        DELETE FROM updata WHERE id = #{id}
+    </delete>
+    <select id="findAll" resultType="Updata">
+          SELECT
+          b.name AS  tname,
+          u.*
+         FROM updata u
+         LEFT JOIN teacher b ON b.wid  = u.wid
+    </select>
+    <select id="findfileLikeUname" parameterType="String" resultType="Updata">
+         SELECT
+          b.name AS  tname,
+          u.*
+         FROM updata u
+         LEFT JOIN teacher b ON b.wid  = u.wid
+          WHERE b.`name` LIKE "%"#{tname}"%"
+    </select>
+    <select id="updatabywidandcourse" parameterType="Updata" resultType="Updata">
+        SELECT * FROM updata WHERE wid=#{wid} AND course=#{course}
+    </select>
+</mapper>
